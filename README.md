@@ -29,3 +29,5 @@ npm install
 npm run typecheck
 npm run build
 ```
+
+> Tip: after forking, copy `.env.example` to `.env` for local runs — never commit real keys.
