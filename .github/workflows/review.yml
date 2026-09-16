@@ -20,6 +20,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: ./ # or shiva-manu/codeReviewer@v1 once tagged
+      - uses: shiva-manu/codeReviewer@v1
         with:
           opencode-api-key: ${{ secrets.OPENCODE_API_KEY }}
