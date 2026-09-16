@@ -1,0 +1,24 @@
+{
+  "name": "code-reviewer",
+  "version": "1.0.0",
+  "description": "AI code reviewer that explains what changed on every GitHub push",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "review": "node dist/index.js"
+  },
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.0",
+    "openai": "^4.67.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.3",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,45 @@
+name: AI Code Reviewer
+description: Reviews code on every push and explains what changed, with risks and suggestions
+author: codeReviewer
+inputs:
+  opencode-api-key:
+    description: OpenCode Go API key for generating reviews
+    required: true
+  github-token:
+    description: GitHub token for reading diffs and posting comments
+    required: false
+    default: ${{ github.token }}
+  model:
+    description: OpenCode Go model to use
+    required: false
+    default: muse-spark-1.3-contributor
+  max-files:
+    description: Max files to include in the review
+    required: false
+    default: '20'
+outputs:
+  review:
+    description: The generated review markdown
+    value: ${{ steps.review.outputs.review }}
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+    - run: npm ci --prefix "${{ github.action_path }}"
+      shell: bash
+    - run: npm run build --prefix "${{ github.action_path }}"
+      shell: bash
+    - id: review
+      run: node "${{ github.action_path }}/dist/index.js"
+      shell: bash
+      env:
+        OPENAI_API_KEY: ${{ inputs.opencode-api-key }}
+        OPENAI_BASE_URL: https://opencode.ai/zen/go/v1
+        INPUT_MODEL: ${{ inputs.model }}
+        INPUT_MAX_FILES: ${{ inputs.max-files }}
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+branding:
+  icon: eye
+  color: purple
